@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { omit } from 'lodash'
 import { reducersInjected, currentlyInjected } from 'actions/registry'
 
 export default class Registry {
@@ -10,15 +9,13 @@ export default class Registry {
   store = null
 
   injectReducers(reducers) {
-    const newReducers = omit(
+    Object.assign(
+      this._reducers,
       reducers.reduce((acc, reducer) => {
         acc[reducer.reducer] = reducer
         return acc
-      }, {}),
-      Object.keys(this._reducers)
+      }, {})
     )
-
-    Object.assign(this._reducers, newReducers)
 
     this.store.replaceReducer(combineReducers(this._reducers))
   }
