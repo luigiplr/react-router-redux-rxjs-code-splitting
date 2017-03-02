@@ -24,12 +24,3 @@ export default class Registry {
     return combineReducers(this._reducers)
   }
 }
-
-function mapReducerNameToImport(reducer) {
-  switch(reducer) {
-    case 'page2':
-      return import('reducers/page2')
-    case 'page3':
-      return import('reducers/page3')
-  }
-}
