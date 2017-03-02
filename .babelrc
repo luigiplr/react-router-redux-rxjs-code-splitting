@@ -13,12 +13,6 @@
   ],
   "plugins": [
     "syntax-dynamic-import",
-    ["fast-async", {
-      "compiler": {
-        "promises": true
-      },
-      "useRuntimeModule": true
-    }],
     "transform-runtime",
     "transform-decorators-legacy",
     "transform-class-properties",

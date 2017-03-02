@@ -9,7 +9,7 @@ export default class Registry {
 
   store = null
 
-  injectReducers(reducers, shouldReplace = true) {
+  injectReducers(reducers) {
     const newReducers = omit(
       reducers.reduce((acc, reducer) => {
         acc[reducer.reducer] = reducer
@@ -20,9 +20,7 @@ export default class Registry {
 
     Object.assign(this._reducers, newReducers)
 
-    if (shouldReplace) {
-      this.store.replaceReducer(combineReducers(this._reducers))
-    }
+    this.store.replaceReducer(combineReducers(this._reducers))
   }
 
   get initialReducers() {

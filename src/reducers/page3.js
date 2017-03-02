@@ -11,7 +11,9 @@ export default function page3(state = initialState, action) {
         ...state,
         toggled: !state.toggled
       }
+    default:
+      return state
   }
 }
 
-page3.reducer = 'page2'
+page3.reducer = 'page3'

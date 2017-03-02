@@ -1,5 +1,5 @@
-export const PAGE1_ACTION = 'PAGE1_ACTION'
+export const PAGE3_ACTION = 'PAGE3_ACTION'
 
-export function page1Action() {
-  return { type: PAGE1_ACTION }
+export function page3Action() {
+  return { type: PAGE3_ACTION }
 }

@@ -11,6 +11,8 @@ export default function page1(state = initialState, action) {
         ...state,
         toggled: !state.toggled
       }
+    default:
+      return state
   }
 }
 

@@ -5,6 +5,7 @@ import { Subject } from 'rxjs/Subject'
 import { injectReducers } from 'actions/registry'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/zip'
+import 'rxjs/add/operator/takeUntil'
 import 'rxjs/add/observable/fromPromise'
 
 const moduleDefaultExport = module => module.default || module

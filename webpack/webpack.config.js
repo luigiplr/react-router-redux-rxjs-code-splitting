@@ -1,24 +1,19 @@
 const path = require('path')
 const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
-const { sync: mkdirp } = require('mkdirp')
-
-const assetsPath = path.join(__dirname, '../dist')
-
-mkdirp(assetsPath)
 
 module.exports = {
   context: path.join(__dirname, '../src'),
-  devtool: 'source-map',
 
   entry: {
-    main: './entry'
+    app: './app.jsx'
   },
 
   output: {
-    path: assetsPath,
-    filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[hash]-[chunkhash].chunk.js'
+    path: path.join(__dirname, '../dist'),
+    filename: '[name]-bundle.js',
+    chunkFilename: '[name]-[hash].chunk.js',
+    publicPath: '/assets/'
   },
 
   module: {
@@ -36,7 +31,11 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    modules: [
+      path.join(__dirname, '../src'),
+      'node_modules'
+    ],
   },
   
   plugins: [
