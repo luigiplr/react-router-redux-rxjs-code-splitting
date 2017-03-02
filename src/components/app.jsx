@@ -16,7 +16,6 @@ export default function App() {
 
         <Route path='/page1' component={asyncRoute(() => import('./pages/page1'), () => import('reducers/page1'))} />
         <Route path='/page2' component={asyncRoute(() => import('./pages/page2'), () => import('reducers/page2'))} />
-        <Route path='/page2' component={asyncRoute(() => import('./pages/page3'), () => import('reducers/page3'))} />
       </Switch>
     </div>
   )

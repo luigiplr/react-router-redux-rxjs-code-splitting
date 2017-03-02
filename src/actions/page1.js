@@ -1,5 +1,5 @@
-export const PAGE1_ACTION = 'PAGE1_ACTION'
+export const PAGE1_TOGGLE_PLAY = 'PAGE1_TOGGLE_PLAY'
 
-export function page1Action() {
-  return { type: PAGE1_ACTION }
+export function togglePlay() {
+  return { type: PAGE1_TOGGLE_PLAY }
 }

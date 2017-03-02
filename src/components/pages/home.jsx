@@ -11,10 +11,10 @@ export default function Home() {
 
       <ul>
         <li>
-          <Link to='page1'>Page 1</Link>
+          <Link to='page1'>Page 1 (Youtube)</Link>
         </li>
         <li>
-          <Link to='page2'>Page 2</Link>
+          <Link to='page2'>Page 2 (Counter)</Link>
         </li>
       </ul>
     </div>

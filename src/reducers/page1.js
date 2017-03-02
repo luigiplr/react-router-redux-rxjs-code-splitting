@@ -1,15 +1,15 @@
-import { PAGE1_ACTION } from 'actions/page1'
+import { PAGE1_TOGGLE_PLAY } from 'actions/page1'
 
 const initialState = {
-  toggled: false
+  playing: false
 }
 
 export default function page1(state = initialState, action) {
   switch(action.type) {
-    case PAGE1_ACTION:
+    case PAGE1_TOGGLE_PLAY:
       return {
         ...state,
-        toggled: !state.toggled
+        playing: !state.playing
       }
     default:
       return state
