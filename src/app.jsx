@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { render } from 'react-dom'
 import createStore from './store'
 import { Provider } from 'react-redux'
-import App from 'containers/app'
+import App from 'components/app'
 
 const store = createStore()
 

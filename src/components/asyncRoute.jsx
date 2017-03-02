@@ -1,11 +1,11 @@
-import React, { PureComponent, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { isArray } from 'lodash'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 import { injectReducers } from 'actions/registry'
 import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/zip'
 import 'rxjs/add/operator/takeUntil'
+import 'rxjs/add/observable/zip'
 import 'rxjs/add/observable/fromPromise'
 
 const moduleDefaultExport = module => module.default || module
@@ -20,7 +20,7 @@ function esModule(module) {
 }
 
 export default function asyncRoute(getComponent, getReducers) {
-  return class AsyncRoute extends PureComponent {
+  return class AsyncRoute extends Component {
     static contextTypes = {
       store: PropTypes.shape({
         dispatch: PropTypes.func.isRequired
@@ -37,37 +37,37 @@ export default function asyncRoute(getComponent, getReducers) {
       if (!this.state.Component) {
         this._componentWillUnmountSubject = new Subject()
 
-        const { dispatch } = this.context.store
         const streams = [
-          Observable.fromPromise(getComponent())
+          Observable
+            .fromPromise(getComponent())
             .map(esModule)
             .takeUntil(this._componentWillUnmountSubject)
         ]
 
         if (getReducers) {
           streams.push(
-            Observable.fromPromise(getReducers())
+            Observable
+              .fromPromise(getReducers())
               .map(esModule.bind({ forceArray: true }))
-              .map(reducers => dispatch(injectReducers(reducers)))
+              .map(reducers => this.context.store.dispatch(injectReducers(reducers)))
               .takeUntil(this._componentWillUnmountSubject)
           )
         }
 
-        this._$loader = Observable
+        Observable
           .zip(...streams, Component => Component)
           .takeUntil(this._componentWillUnmountSubject)
+          .subscribe(Component => {
+            AsyncRoute.Component = Component
 
-        this._$loader.subscribe(Component => {
-          AsyncRoute.Component = Component
+            if (this._mounted) {
+              this.setState({Component})
+            } else {
+              this.state.Component = Component
+            }
 
-          if (this._mounted) {
-            this.setState({Component})
-          } else {
-            this.state.Component = Component
-          }
-
-          this._componentWillUnmountSubject.unsubscribe()
-        })
+            this._componentWillUnmountSubject.unsubscribe()
+          })
       }
     }
 
