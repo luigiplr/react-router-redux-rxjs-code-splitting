@@ -1,0 +1,45 @@
+{
+  "presets": [
+    "react",
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      },
+      "modules": false,
+      "loose": true,
+      "useBuiltIns": true
+    }],
+    "stage-3"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    ["fast-async", {
+      "compiler": {
+        "promises": true
+      },
+      "useRuntimeModule": true
+    }],
+    "transform-runtime",
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "lodash"
+  ],
+
+  "env": {
+    "production": {
+      "presets": ["react-optimize"]
+    },
+    "development": {
+      "plugins": [["react-transform", {
+        "transforms": [{
+          "transform": "react-transform-hmr",
+          "imports": ["react"],
+          "locals": ["module"]
+        }, {
+          "transform": "react-transform-catch-errors",
+          "imports": ["react", "redbox-react"]
+        }]
+      }]]
+    }
+  }
+}

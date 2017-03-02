@@ -1,0 +1,23 @@
+{
+    "externalTranspiler": {
+        "name": "babel",
+        "options": {}
+    },
+    "compilerOptions": {
+        "target": "ES6",
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react",
+        "module": "es6",
+        "emitDecoratorMetadata": true,
+        "removeComments": false,
+        "sourceMap": false,
+        "inlineSourceMap": true,
+        "noEmitHelpers": true
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        ".build_temp"
+    ]
+}

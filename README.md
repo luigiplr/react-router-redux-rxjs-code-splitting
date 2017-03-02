@@ -1,2 +1,2 @@
-# react-router-rxjs-code-splitting
-An example React app using React Router &amp; RxJS for route management &amp; chunk loading respectively.
+# react-router-redux-rxjs-code-splitting
+An example React Redux app using React Router & RxJS for route management & chunk loading respectively.
