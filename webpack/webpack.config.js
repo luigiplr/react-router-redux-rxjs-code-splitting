@@ -13,7 +13,7 @@ module.exports = {
   output: {
     filename: '[name]-bundle.js',
     chunkFilename: '[name]-[hash].chunk.js',
-    publicPath: '/assets/'
+    publicPath: '/'
   },
 
   module: {
