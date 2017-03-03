@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const merge = require('webpack-merge')
 const BabiliPlugin = require('babili-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = merge(require('./webpack.config'), {
   devtool: 'none',
@@ -18,6 +19,10 @@ module.exports = merge(require('./webpack.config'), {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
+    }),
+
+    new CleanWebpackPlugin(['docs'], {
+      root: path.resolve(__dirname, '../')
     })
   ]
 })

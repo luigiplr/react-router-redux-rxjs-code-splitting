@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   context: path.join(__dirname, '../src'),
@@ -42,6 +43,10 @@ module.exports = {
       'process.env.NODE_ENV': process.env.NODE_ENV
     }),
 
-    new LodashModuleReplacementPlugin()
+    new LodashModuleReplacementPlugin(),
+
+    new HtmlWebpackPlugin({
+      title: ''
+    })
   ]
 }
