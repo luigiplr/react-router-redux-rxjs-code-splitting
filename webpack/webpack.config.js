@@ -46,7 +46,7 @@ module.exports = {
     new LodashModuleReplacementPlugin(),
 
     new HtmlWebpackPlugin({
-      title: ''
+      template: 'index.template.html'
     })
   ]
 }
