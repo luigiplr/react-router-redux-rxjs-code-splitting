@@ -3,6 +3,10 @@ import { Route, Switch } from 'react-router-dom'
 import Helmet from 'react-helmet'
 import asyncRoute from './asyncRoute'
 
+const HomePage = asyncRoute(() => import('./pages/home'))
+const Page1 = asyncRoute(() => import('./pages/page1'), () => import('reducers/page1'))
+const Page2 = asyncRoute(() => import('./pages/page2'), () => import('reducers/page2'))
+
 export default function App() {
   return (
     <div>
@@ -12,10 +16,10 @@ export default function App() {
       />
 
       <Switch>
-        <Route exact path='/' component={asyncRoute(() => import('./pages/home'))} />
+        <Route exact path='/' component={HomePage} />
 
-        <Route path='/page1' component={asyncRoute(() => import('./pages/page1'), () => import('reducers/page1'))} />
-        <Route path='/page2' component={asyncRoute(() => import('./pages/page2'), () => import('reducers/page2'))} />
+        <Route path='/page1' component={Page1} />
+        <Route path='/page2' component={Page2} />
       </Switch>
     </div>
   )

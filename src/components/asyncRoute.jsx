@@ -6,17 +6,18 @@ import { injectReducers } from 'actions/registry'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/takeUntil'
 import 'rxjs/add/observable/zip'
+import 'rxjs/add/observable/of'
 import 'rxjs/add/observable/fromPromise'
 
 const moduleDefaultExport = module => module.default || module
 
-function esModule(module) {
+function esModule(module, forceArray) {
   if (isArray(module)) {
     return module.map(moduleDefaultExport)
   }
 
   const defualted = moduleDefaultExport(module)
-  return this.forceArray ? [defualted] : defualted
+  return forceArray ? [defualted] : defualted
 }
 
 export default function asyncRoute(getComponent, getReducers) {
@@ -28,38 +29,48 @@ export default function asyncRoute(getComponent, getReducers) {
     }
 
     static Component = null
+    static ReducersLoaded = false
 
     state = {
-      Component: AsyncRoute.Component 
+      Component: AsyncRoute.Component,
+      ReducersLoaded: AsyncRoute.ReducersLoaded
     }
 
     componentWillMount() {
-      if (!this.state.Component) {
+      const { Component, ReducersLoaded } = this.state
+      const shouldLoadReducers = !ReducersLoaded && getReducers
+
+      if (!Component || shouldLoadReducers) {
         this._componentWillUnmountSubject = new Subject()
 
         const streams = [
-          Observable
-            .fromPromise(getComponent())
-            .map(esModule)
-            .takeUntil(this._componentWillUnmountSubject)
+          Component
+            ? Observable.of(Component)
+                .takeUntil(this._componentWillUnmountSubject)
+            : Observable.fromPromise(getComponent())
+                .map(esModule)
+                .map(Component => {
+                  AsyncRoute.Component = Component
+                  return Component
+                })
+                .takeUntil(this._componentWillUnmountSubject)
         ]
 
-        if (getReducers) {
+        if (shouldLoadReducers) {
           streams.push(
-            Observable
-              .fromPromise(getReducers())
-              .map(esModule.bind({ forceArray: true }))
-              .map(reducers => this.context.store.dispatch(injectReducers(reducers)))
+            Observable.fromPromise(getReducers())
+              .map(module => esModule(module, true))
+              .map(reducers => {
+                this.context.store.dispatch(injectReducers(reducers))
+                AsyncRoute.ReducersLoaded = true
+              })
               .takeUntil(this._componentWillUnmountSubject)
           )
         }
 
-        Observable
-          .zip(...streams, Component => Component)
+        Observable.zip(...streams)
           .takeUntil(this._componentWillUnmountSubject)
-          .subscribe(Component => {
-            AsyncRoute.Component = Component
-
+          .subscribe(([Component]) => {
             if (this._mounted) {
               this.setState({Component})
             } else {
@@ -77,7 +88,7 @@ export default function asyncRoute(getComponent, getReducers) {
 
     componentWillUnmount() {
       if (this._componentWillUnmountSubject && !this._componentWillUnmountSubject.closed) {
-        this._componentWillUnmountSubject.onNext()
+        this._componentWillUnmountSubject.next()
         this._componentWillUnmountSubject.unsubscribe()
       }
     }
