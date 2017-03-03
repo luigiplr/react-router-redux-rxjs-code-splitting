@@ -5,8 +5,6 @@
     },
     "compilerOptions": {
         "target": "ES6",
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
         "jsx": "react",
         "module": "es6",
         "emitDecoratorMetadata": true,
@@ -17,7 +15,6 @@
     },
     "exclude": [
         "node_modules",
-        "dist",
-        ".build_temp"
+        "dist"
     ]
 }
