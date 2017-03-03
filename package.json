@@ -10,7 +10,7 @@
   "author": "Luigi Poole <luigipoole@outlook.com>",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack/webpack.config.dev.js",
-    "build": ""
+    "build": "cross-env NODE_ENV=production webpack --colors --progress -p --config ./webpack/webpack.config.prod.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
