@@ -23,6 +23,10 @@ module.exports = merge(require('./webpack.config'), {
 
     new CleanWebpackPlugin(['docs'], {
       root: path.resolve(__dirname, '../')
+    }),
+
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
     })
   ]
 })

@@ -38,10 +38,6 @@ module.exports = {
   },
   
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': process.env.NODE_ENV
-    }),
-
     new LodashModuleReplacementPlugin(),
 
     new HtmlWebpackPlugin({
