@@ -6,6 +6,10 @@ const BabiliPlugin = require('babili-webpack-plugin')
 module.exports = merge(require('./webpack.config'), {
   devtool: 'none',
 
+  output: {
+    path: path.join(__dirname, '../docs')
+  },
+
   plugins: [
     new BabiliPlugin({
       test: /\.jsx?$/

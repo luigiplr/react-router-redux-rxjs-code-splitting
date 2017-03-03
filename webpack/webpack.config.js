@@ -10,7 +10,6 @@ module.exports = {
   },
 
   output: {
-    path: path.join(__dirname, '../dist'),
     filename: '[name]-bundle.js',
     chunkFilename: '[name]-[hash].chunk.js',
     publicPath: '/assets/'
